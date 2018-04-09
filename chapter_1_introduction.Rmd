@@ -31,7 +31,7 @@ This R script downloads and installs all packages used at some point. It needs t
 
 We don't require the output, so I'm adding `echo = FALSE` to the code block header.
 
-```{r install packages, message=FALSE, include=FALSE}
+```{r install packages}
 #make a vector of all the known-needed packages
 package_array <- (c("AER", "car", "censReg", "dplyr", "dummies", "dynlm", "effects", "ggplot2",
                     "lmtest", "maps", "mfx", "orcutt", "plm", "quantmod", "sandwich", "quantreg", 
@@ -40,7 +40,8 @@ package_array <- (c("AER", "car", "censReg", "dplyr", "dummies", "dynlm", "effec
                     "wooldridge", "tidyverse", "tibble"))
 
 #install all the packages in that vector
-install.packages(package_array)
+#I'm commenting out the install packages code because I dont want to install these packages everytime I knit this file!
+#install.packages(package_array, repos = "http://cran.us.r-project.org")
 ```
 
 
@@ -94,8 +95,10 @@ avgs["Jackson"]
 avgs[avgs >= 0.35]
 ```
 
+
+Let's remake that vector in the tidy way. Each player name and average will be an observation. We'll need tibble for this.
+
 ```{r Script 1.8.b Naming and Index Vectors}
-#let's remake that vector in the tidy way. Each player name and average will be an observation.
 library(tibble)
 player_array <- tibble(x = players, y = avgs)
 player_array
@@ -123,16 +126,8 @@ player_array_with_headers %>%
 
 #Script 1.9 about Matrices
 
+This is were I'm leaving off for the moment. 
+
 ```{r Script 1.9a Matrices}
 
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
