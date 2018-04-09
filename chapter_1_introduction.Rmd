@@ -1,0 +1,138 @@
+---
+title: "ch_1_introduction"
+author: "Jason Grahn"
+date: "April 8, 2018"
+output: html_document
+---
+
+#Script 1.1 R-as-a-calculator
+
+For the simple commands for math in R, I'll use the same code, but commenting it out for practice. 
+```{r}
+#simple addition
+1+1
+
+#multiplication and exponents including order of operations
+5*(4-1)^2
+
+#square roots
+sqrt(10)
+
+#logs
+log(10)
+
+#square roots AND logs
+sqrt(log(10))
+```
+
+#Script 1.2 installs a bunch of packages
+
+This R script downloads and installs all packages used at some point. It needs to be run once for each computer/user only. The list in the book has 28 packages involved and I'm going to add the tidyverse (and maybe others to it as well.)
+
+We don't require the output, so I'm adding `echo = FALSE` to the code block header.
+
+```{r install packages, message=FALSE, include=FALSE}
+#make a vector of all the known-needed packages
+package_array <- (c("AER", "car", "censReg", "dplyr", "dummies", "dynlm", "effects", "ggplot2",
+                    "lmtest", "maps", "mfx", "orcutt", "plm", "quantmod", "sandwich", "quantreg", 
+                    "rio", "rmarkdown", "sampleSelection", "stargazer", "survival", "systemfit",
+                    "truncreg", "tseries", "urca", "xtable", "vars", "WDI", "xts", "zoo", 
+                    "wooldridge", "tidyverse", "tibble"))
+
+#install all the packages in that vector
+install.packages(package_array)
+```
+
+
+#Script 1.3 is Making objects
+
+This is other basic R work. Objects are assigned by using `<-`. I dont know that tidy improves on this at all, so going to just run with what Heiss input with my own code comments
+
+```{r}
+#make something the object *x*, this won't have any output.
+x <- 5
+
+#display x, and x^2
+x
+x^2
+
+#make objects y & z with immediate display
+#to make something immediate display put the command in *()*
+(y <- 3)
+
+#z is y to the x power
+(z <- y^x)
+
+```
+
+skipping ahead to..
+
+#Script 1.8 about Naming and Index Vectors
+
+```{r Script 1.8.a Naming and Index Vectors}
+#create a vector of averages #this is directly from the book
+avgs <- c(.336, .358, .356, .349, .346)
+
+#create a vector of player names
+players <- c("Cobb","Hornsby", "Jackson", "o'Doul", "Delahanty")
+
+#assign names to vectors and display vectors
+names(avgs) <- players
+avgs
+
+#extracting just one indices by number
+avgs[2]
+
+#or first through fouth indices
+avgs[1:4]
+
+#or look up an indices by name
+#avgs["jackson"] This doesn't work because 'Jackson' is upper case
+avgs["Jackson"]
+
+#and we can do logical indices
+avgs[avgs >= 0.35]
+```
+
+```{r Script 1.8.b Naming and Index Vectors}
+#let's remake that vector in the tidy way. Each player name and average will be an observation.
+library(tibble)
+player_array <- tibble(x = players, y = avgs)
+player_array
+
+#that's good, but those need headers. 
+player_array_with_headers <- tibble(player_name = players, 
+                                    player_avgs = avgs)
+
+player_array_with_headers
+
+#ok, so how do I call an individual observation row?  
+#because `player_array_with_headers[2]` calls the entire second column...
+#ah! call the second observation (row) as the first argument inside [], with nothing as the second argument. 
+player_array_with_headers[2,]
+
+#so if we want the first through fourth observation
+player_array_with_headers[1:4,]
+
+#and now how about viewing just one observation? I'd do that using the pipe and a dplyr filter
+#need to load dplyr that was installed with the tidyverse
+library(dplyr)
+player_array_with_headers %>% 
+  filter(player_name == "Jackson")
+```
+
+#Script 1.9 about Matrices
+
+```{r Script 1.9a Matrices}
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
