@@ -1,8 +1,8 @@
 ---
-title: "ch_1_introduction_rmd"
+title: "ch_1_introduction_notebook"
 author: "Jason Grahn"
 date: "April 8, 2018"
-output: html_document
+output: html_notebook
 ---
 
 #Script 1.1 R-as-a-calculator
