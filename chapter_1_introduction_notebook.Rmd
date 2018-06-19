@@ -2,7 +2,7 @@
 title: "ch_1_introduction_notebook"
 author: "Jason Grahn"
 date: "April 8, 2018"
-output: html_notebook
+output: github_notebook
 ---
 
 #Script 1.1 R-as-a-calculator
@@ -191,7 +191,10 @@ sales_1_13b
 
 #now let's make that extra column
 sales_1_13b <- sales_1_13b %>% 
-  mutate(totalv1 = product1 + product2 + product3)
+  mutate(totalv1 = product1 + product2 + product3,
+         #only adding totalv2 and v3 because they're in the other dataframe as well.
+         totalv2 = product1 + product2 + product3,
+         totalv3 = product1 + product2 + product3)
 sales_1_13b
 
 #comparing mutate to the options in the book, the only one that makes sense for small datasets (to me) is 
@@ -227,6 +230,49 @@ sales_1_13b %>%
 sales_1_13b %>% 
   subset(product3 >= 3)
 
+#or we can even take that wide data and make it long
+sales_1_13b %>% 
+  gather(c(product1, product2, product3, totalv1, totalv2, totalv3), key = metric, value = value)
 ```
 
 #giving a pause here for now. page 22, 1.3.3 "R data files"
+```{r}
+colMeans(sales_1_13b)
+summary(sales_1_13b)
+```
+
+```{r}
+#save the sales data to an rdata file. 
+save(sales, file = "oursalesdata.RData")
+#and remove it from memory
+rm(sales)
+#then check if the variable "sales" exists in memory. This should resolve as "FALSE"
+exists("sales")
+#then load the datafile
+load("oursalesdata.RData")
+#and look for the variable "sales"
+exists("sales")
+#show it to me:
+sales
+#and provide me averages of the variables
+colMeans(sales)
+```
+
+```{r}
+#and might as well do the same with my tidy-style sales data
+sales_1_13b %>% 
+  save(file = "tidysalesdata.RData")
+
+rm(sales_1_13b)
+#then check if the variable "sales" exists in memory. This should resolve as "FALSE"
+exists("sales_1_13b")
+#then load the datafile
+load("tidysalesdata.RData")
+#and look for the variable "sales"
+exists("sales")
+#show it to me:
+tidysalesdata.RData.sales
+#and provide me averages of the variables
+colMeans(sales_1_13b)
+```
+
